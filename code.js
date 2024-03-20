@@ -1,20 +1,23 @@
-async function logTotal() {
-    let total = 0;
-
+async function logAverage() {
     try {
+        let total = 0;
         const response = await fetch("https://fauxdata.codelayer.io/api/orders");
         const data = await response.json();
-        for (let order in data.orders) {
-            for (let item in data.orders[order].items) {
+        
+        for (order in data.orders) {
+            for (item in data.orders[order].items) {
                 total += Number(data.orders[order].items[item].price);
             }
         }
-        console.log("The total price is: £" + total)
+
+        let average = (total / data.orders.length).toFixed(2);
+        console.log("The average order value is: £" + average);
     }
+
     catch (error) {
         console.log("You've had an error! The error is:");
         console.log(error);
     }
 }
 
-logTotal();
+logAverage();
